@@ -59,7 +59,7 @@
 		"platformerSetting": {
 			"type": "string",
 			"name": "Platformer Mode",
-			"default": "COS",
+			"default": "Disabled",
 			"one-of": ["CBF", "COS", "Disabled"]
 		}
 	}

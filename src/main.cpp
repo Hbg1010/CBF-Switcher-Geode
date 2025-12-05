@@ -4,6 +4,9 @@
 
 using namespace geode::prelude;
 
+#define GET_SETTING_BOOL(mod, key) mod->getSettingValue<bool>(key)
+#define GET_SETTING_STRING(mod, key) mod->getSettingValue<std::string>(key)
+
 // represents cbf modes
 enum CBFMode {
     Disabled,
@@ -15,6 +18,8 @@ enum CBFMode {
 static void setCbfMode(CBFMode setting, Mod* CBF) {
     CBF->setSettingValue("soft-toggle", CBFMode::Disabled == setting);
     CBF->setSettingValue("click-on-steps", CBFMode::COS == setting);
+
+    
 }
 
 // turns string from settings into enum
@@ -29,16 +34,16 @@ static CBFMode modeFromString(std::string& mode) {
 }
 
 // sets entirely based off of editor mode
-static void setCBFMode(bool isPlat) {
+static void setCBFModeInLevel(bool isPlat) {
     auto ThisMod = Mod::get();
     
-    if (!ThisMod->getSettingValue<bool>("softtoggle")) {
+    if (!GET_SETTING_BOOL(ThisMod, "softtoggle")) {
         if (auto CBF = Loader::get()->getLoadedMod("syzzi.click_between_frames")) {
             std::string modeName;
             if (isPlat) {
-                modeName = ThisMod->getSettingValue<std::string>("platformerSettings"); 
+                modeName = GET_SETTING_STRING(ThisMod, "platformerSettings"); 
             } else {
-                modeName = ThisMod->getSettingValue<std::string>("classicSetting");
+                modeName = GET_SETTING_STRING(ThisMod, "classicSetting");
             }
 
             CBFMode mode = modeFromString(modeName);
@@ -49,7 +54,7 @@ static void setCBFMode(bool isPlat) {
 
 class $modify(plStuff, PlayLayer) {
     bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
-        setCBFMode(level->isPlatformer()); // happens before
+        setCBFModeInLevel(level->isPlatformer()); // happens before
         if (!PlayLayer::init(level, useReplay, dontCreateObjects)) return false;
         return true;
     }
@@ -58,9 +63,9 @@ class $modify(plStuff, PlayLayer) {
 class $modify(EUIToggle, EditorUI) {
     bool init(LevelEditorLayer* level) {
         Mod* modpointer = Mod::get();
-        if (modpointer->getSettingValue<bool>("ToggleCBFInEditor")) {
+        if (!GET_SETTING_BOOL(modpointer, "softtoggle") && GET_SETTING_BOOL(modpointer, "ToggleCBFInEditor")) {
             if (auto CBF = Loader::get()->getLoadedMod("syzzi.click_between_frames")) {
-                std::string cbfMode = modpointer->getSettingValue<std::string>("EditorMode");
+                std::string cbfMode = GET_SETTING_STRING(modpointer, "EditorMode");
                 setCbfMode(
                     modeFromString(cbfMode),
                     CBF
