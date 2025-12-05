@@ -1,0 +1,54 @@
+{
+	"geode": "4.10.0",
+	"gd": {
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074",
+		"ios": "2.2074"
+	},
+	"id": "hbg1010.cbf-gamemode-toggle",
+	"name": "CBF Gamemode Toggle",
+	"version": "v1.0.0",
+	"developer": "Hbg1010",
+	"description": "Toggle CBF between platformer and classic",
+	"dependencies": {
+		"syzzi.click_between_frames": {
+			"importance": "required",
+			"version": "v1.4.6"
+		}
+	},
+	"settings": {
+		"softtoggle": {
+			"type": "bool",
+			"name": "Disable",
+			"default": false,
+			"description": "Soft toggle the mod; disable it without having to restart your game."
+		},
+		"ToggleCBFInEditor": {
+			"type": "bool",
+			"name": "Force Mode in Editor",
+			"default": false,
+			"description": "Allows you to force a certain cbf mode when you use the editor. Useful for playtesting levels"
+		},
+		"EditorMode": {
+			"type": "string",
+			"default": "Disabled",
+			"name": "CBF Editor Mode",
+			"one-of": ["CBF", "COS", "Disabled"],
+			"description": "Allows you to change your cbf mode when entering the editor. It's probably a good practice to build levels without CBF.",
+			"enable-if": "ToggleCBFInEditor"
+		},
+		"classicSetting": {
+			"type": "string",
+			"name": "Classic Mode",
+			"default": "CBF",
+			"one-of": ["CBF", "COS", "Disabled"]
+		},
+		"platformerSetting": {
+			"type": "string",
+			"name": "Platformer Mode",
+			"default": "COS",
+			"one-of": ["CBF", "COS", "Disabled"]
+		}
+	}
+}
