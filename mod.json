@@ -26,7 +26,7 @@
 	"dependencies": {
 		"syzzi.click_between_frames": {
 			"importance": "required",
-			"version": "v1.4.6"
+			"version": ">=v1.4.6"
 		}
 	},
 	"settings": {
