@@ -9,4 +9,5 @@ Currently this mod is desynced from Mega Hack v9's cbf toggler. The mod does alt
 
 ## Credits: 
 Mod by Hbg1010
+
 Mod logo made by Hbg1010 using CBF's logo created by alex/sincos
