@@ -11,6 +11,18 @@
 	"version": "v1.0.0",
 	"developer": "Hbg1010",
 	"description": "Toggle CBF between platformer and classic",
+	"links": {
+		"source": "https://github.com/Hbg1010/CBF-Switcher-Geode",
+		"community": "https://discord.gg/V4xQnNxfNh"
+	},
+	"issues": {
+		"url": "https://github.com/Hbg1010/CBF-Switcher-Geode/issues",
+		"info": "If you find any bugs, or have any feature requests, please create an issue on Github!"
+	},
+	"tags": [
+		"offline",
+		"gameplay"
+	],
 	"dependencies": {
 		"syzzi.click_between_frames": {
 			"importance": "required",
