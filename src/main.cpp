@@ -18,8 +18,6 @@ enum CBFMode {
 static void setCbfMode(CBFMode setting, Mod* CBF) {
     CBF->setSettingValue("soft-toggle", CBFMode::Disabled == setting);
     CBF->setSettingValue("click-on-steps", CBFMode::COS == setting);
-
-    
 }
 
 // turns string from settings into enum
@@ -36,42 +34,37 @@ static CBFMode modeFromString(std::string& mode) {
 // sets entirely based off of editor mode
 static void setCBFModeInLevel(bool isPlat) {
     auto ThisMod = Mod::get();
-    
-    if (!GET_SETTING_BOOL(ThisMod, "softtoggle")) {
-        if (auto CBF = Loader::get()->getLoadedMod("syzzi.click_between_frames")) {
-            std::string modeName;
-            if (isPlat) {
-                modeName = GET_SETTING_STRING(ThisMod, "platformerSettings"); 
-            } else {
-                modeName = GET_SETTING_STRING(ThisMod, "classicSetting");
-            }
-
-            CBFMode mode = modeFromString(modeName);
-            setCbfMode(mode, CBF);
+    if (auto CBF = Loader::get()->getLoadedMod("syzzi.click_between_frames")) {
+        std::string modeName;
+        if (isPlat) {
+            modeName = GET_SETTING_STRING(ThisMod, "platformerSettings"); 
+        } else {
+            modeName = GET_SETTING_STRING(ThisMod, "classicSetting");
         }
+
+        CBFMode mode = modeFromString(modeName);
+        setCbfMode(mode, CBF);
     }
+    
 }
 
 class $modify(plStuff, PlayLayer) {
     bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
-        setCBFModeInLevel(level->isPlatformer()); // happens before
-        if (!PlayLayer::init(level, useReplay, dontCreateObjects)) return false;
-        return true;
-    }
-};
-
-class $modify(EUIToggle, EditorUI) {
-    bool init(LevelEditorLayer* level) {
-        Mod* modpointer = Mod::get();
-        if (!GET_SETTING_BOOL(modpointer, "softtoggle") && GET_SETTING_BOOL(modpointer, "ToggleCBFInEditor")) {
-            if (auto CBF = Loader::get()->getLoadedMod("syzzi.click_between_frames")) {
-                std::string cbfMode = GET_SETTING_STRING(modpointer, "EditorMode");
-                setCbfMode(
-                    modeFromString(cbfMode),
-                    CBF
-                );
+        if (!GET_SETTING_BOOL(Mod::get(), "softtoggle")) {
+            // editor override  
+            if (level->m_levelID == 0 && GET_SETTING_BOOL(Mod::get(), "ToggleCBFInEditor")) {
+                if (auto CBF = Loader::get()->getLoadedMod("syzzi.click_between_frames")) {
+                    std::string cbfMode = GET_SETTING_STRING(Mod::get(), "EditorMode");
+                    setCbfMode(
+                        modeFromString(cbfMode),
+                        CBF
+                    );
+                }
+            // not editor lol
+            } else {
+                setCBFModeInLevel(level->isPlatformer());
             }
         }
-        return EditorUI::init(level);
+        return PlayLayer::init(level, useReplay, dontCreateObjects);
     }
 };

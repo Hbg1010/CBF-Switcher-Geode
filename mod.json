@@ -1,14 +1,14 @@
 {
-	"geode": "4.10.0",
+	"geode": "5.4.0",
 	"gd": {
-		"win": "2.2074",
-		"android": "2.2074",
-		"mac": "2.2074",
-		"ios": "2.2074"
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
 	},
 	"id": "hbg1010.cbf-gamemode-toggle",
 	"name": "CBF Gamemode Toggle",
-	"version": "v1.0.0",
+	"version": "v1.1.0",
 	"developer": "Hbg1010",
 	"description": "Toggle CBF between platformer and classic",
 	"links": {
@@ -24,10 +24,7 @@
 		"gameplay"
 	],
 	"dependencies": {
-		"syzzi.click_between_frames": {
-			"importance": "required",
-			"version": ">=v1.4.6"
-		}
+		"syzzi.click_between_frames": ">=v1.5.0"
 	},
 	"settings": {
 		"softtoggle": {
