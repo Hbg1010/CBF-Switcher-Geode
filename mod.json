@@ -37,7 +37,7 @@
 			"type": "bool",
 			"name": "Force Mode in Editor",
 			"default": false,
-			"description": "Allows you to force a certain cbf mode when you use the editor. Useful for playtesting levels"
+			"description": "Allows you to force a certain cbf mode when you use the editor. Useful for playtesting and verifying levels"
 		},
 		"EditorMode": {
 			"type": "string",
